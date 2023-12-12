@@ -15,8 +15,9 @@ const Register: React.FC = () => {
 <div style={{marginLeft:"50px", marginTop:"40px"}}>
   <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start"}}>
     {/* <Title level={5} >START FOR FREE</Title> */}
-    <Title level={1} style={{fontFamily:"cursive"}}>Create new account</Title>
-    <Title level={5}>Already A Member? &nbsp; <a href='#'>Login</a></Title>
+    <Title level={5} style={{color:"gray", fontWeight:"500"}}>START FOR FREE</Title>
+    <Title level={1} style={{fontFamily:"cursive", color:"white"}}>Create new account.</Title>
+    <Title level={5} style={{color:"gray", fontWeight:"200"}}>Already A Member? <a href='#'>Log In</a></Title>
   </div><br/>
 
   <Form 
