@@ -1,14 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Button, Form, Input, Typography, InputRef } from "antd";
-import type { SizeType } from "antd/es/config-provider/SizeContext";
+import React, { useEffect, useRef, useState } from 'react';
+import { Button, Form, Input, Typography, InputRef } from 'antd';
+import type { SizeType } from 'antd/es/config-provider/SizeContext';
 import {
   MailOutlined,
   EyeInvisibleOutlined,
   UserOutlined,
-} from "@ant-design/icons";
-import styled from "styled-components";
-import bg3 from "../images/bg3.png";
-import axios from "axios";
+} from '@ant-design/icons';
+import styled from 'styled-components';
+import bg3 from '../images/bg3.png';
+import axios from 'axios';
 const { Title } = Typography;
 
 const Register: React.FC = () => {
@@ -39,14 +39,19 @@ const Register: React.FC = () => {
   const onFinish = (values: any) => {
     console.log(values);
 
-    axios.post("http://192.168.1.94:3500/api/register", values).then((res) => {
-      console.log(res);
-    });
-    console.log("Success:", values);
+    axios
+      .post('http://192.168.1.94:3500/api/register', values)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    console.log('Success:', values);
   };
 
   const onFinishFailed = (errorInfo: any) => {
-    console.log("Failed:", errorInfo);
+    console.log('Failed:', errorInfo);
   };
 
   type FieldType = {
@@ -54,75 +59,75 @@ const Register: React.FC = () => {
     password?: string;
     remember?: string;
   };
-  const [size, setSize] = useState<SizeType>("large");
+  const [size, setSize] = useState<SizeType>('large');
   const inputRef = useRef<InputRef>(null);
   useEffect(() => {
     inputRef.current!.focus({
-      cursor: "start",
+      cursor: 'start',
     });
   });
 
   return (
-    <Container id="kkk">
+    <Container id='kkk'>
       <SubContainer>
         <Span>
           <Title>Create new account</Title>
         </Span>
         <Form
-          name="basic"
+          name='basic'
           labelCol={{ span: 8 }}
           wrapperCol={{ span: 16 }}
-          style={{ maxWidth: 600, margin: "0px 0px 60px 100px" }}
+          style={{ maxWidth: 600, margin: '0px 0px 60px 100px' }}
           initialValues={{ remember: true }}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
-          autoComplete="off"
+          autoComplete='off'
         >
           <Div>
-            <Form.Item style={{ margin: "0px" }}>
+            <Form.Item style={{ margin: '0px' }}>
               <Form.Item
-                name="firstName"
+                name='firstName'
                 rules={[{ required: true }]}
-                style={{ display: "inline-block", width: "calc(50% - 8px)" }}
-                className="first_name"
+                style={{ display: 'inline-block', width: 'calc(50% - 8px)' }}
+                className='first_name'
               >
                 <Input
                   size={size}
-                  placeholder="first name"
+                  placeholder='first name'
                   suffix={<UserOutlined />}
                   ref={inputRef}
                 />
               </Form.Item>
               <Form.Item
-                name="lastName"
+                name='lastName'
                 rules={[{ required: true }]}
                 style={{
-                  display: "inline-block",
-                  width: "calc(50% - 8px)",
-                  margin: "0 8px",
+                  display: 'inline-block',
+                  width: 'calc(50% - 8px)',
+                  margin: '0 8px',
                 }}
               >
                 <Input
                   size={size}
-                  placeholder="last name"
+                  placeholder='last name'
                   suffix={<UserOutlined />}
                 />
               </Form.Item>
             </Form.Item>
           </Div>
           <Form.Item
-            name="email"
-            rules={[{ required: true }, { type: "email" }]}
+            name='email'
+            rules={[{ required: true }, { type: 'email' }]}
           >
             <Input
-              type="email"
-              size="large"
-              placeholder="email"
+              type='email'
+              size='large'
+              placeholder='email'
               suffix={<MailOutlined />}
             />
           </Form.Item>
           <Form.Item
-            name="password"
+            name='password'
             rules={[
               { required: true },
               // {
@@ -134,40 +139,40 @@ const Register: React.FC = () => {
             ]}
           >
             <Input
-              type="password"
-              size="large"
-              placeholder="password"
+              type='password'
+              size='large'
+              placeholder='password'
               suffix={<EyeInvisibleOutlined />}
             />
           </Form.Item>
           <Section>
             <Form.Item>
               <Button
-                type="primary"
-                shape="round"
+                type='primary'
+                shape='round'
                 size={size}
                 style={{
-                  display: "inline-block",
-                  width: "calc(50% + 90px)",
-                  margin: "0 8px",
-                  backgroundColor: "gray",
+                  display: 'inline-block',
+                  width: 'calc(50% + 90px)',
+                  margin: '0 8px',
+                  backgroundColor: 'gray',
                 }}
-                htmlType="submit"
+                htmlType='submit'
               >
                 Change method
               </Button>
             </Form.Item>
             <Form.Item>
               <Button
-                type="primary"
-                shape="round"
+                type='primary'
+                shape='round'
                 size={size}
                 style={{
-                  display: "inline-block",
-                  width: "calc(50% + 87px)",
-                  margin: "0 3px",
+                  display: 'inline-block',
+                  width: 'calc(50% + 87px)',
+                  margin: '0 3px',
                 }}
-                htmlType="submit"
+                htmlType='submit'
               >
                 Create account
               </Button>

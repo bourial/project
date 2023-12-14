@@ -2,13 +2,13 @@ import { Navigate, useLocation, Outlet } from 'react-router-dom';
 import { UserContext } from '../context/user-context';
 import { useContext } from 'react';
 
-export const RequireAuth: React.FC = () => {
+export const AlreadyAuthenticated: React.FC = () => {
   const Location = useLocation();
   const { isAuthenticated } = useContext(UserContext);
 
   return isAuthenticated ? (
-    <Outlet />
+    <Navigate to='/' state={{ from: Location }} replace />
   ) : (
-    <Navigate to='/login' state={{ from: Location }} replace />
+    <Outlet />
   );
 };

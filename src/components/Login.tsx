@@ -1,9 +1,11 @@
-import React, { useState } from "react";
-import { Button, Checkbox, Form, Input } from "antd";
-import styled from "styled-components";
-import axios from "axios";
-import type { SizeType } from "antd/es/config-provider/SizeContext";
-import { useNavigate } from "react-router-dom";
+import React, { useContext, useState } from 'react';
+import { Button, Checkbox, Form, Input } from 'antd';
+import styled from 'styled-components';
+import axios from 'axios';
+import type { SizeType } from 'antd/es/config-provider/SizeContext';
+import { useNavigate } from 'react-router-dom';
+import { axiosClient } from '../AxiosInstance';
+import { UserContext } from '../context/user-context';
 
 type FieldType = {
   email?: string;
@@ -13,6 +15,8 @@ type FieldType = {
 
 const App: React.FC = () => {
   let navigate = useNavigate();
+  const { setIsAuthenticated, setAccessToken, setUser } =
+    useContext(UserContext);
 
   const Div = styled.div`
     display: flex;
@@ -21,52 +25,58 @@ const App: React.FC = () => {
   `;
 
   const onFinish = (values: any) => {
-    console.log(values);
-    axios.post("http://192.168.1.94:3500/api/login", values).then((res) => {
-      localStorage.setItem("access", res.data.accessToken);
-      localStorage.setItem("refresh", res.data.refreshToken);
-      navigate("/");
-    });
-    console.log("Success:", values);
+    axiosClient
+      .post('/login', values)
+      .then(res => {
+        localStorage.setItem('access', res.data.accessToken);
+        localStorage.setItem('refresh', res.data.refreshToken);
+        setAccessToken(res.data.accessToken);
+        setIsAuthenticated(true);
+        setUser(res.data.user);
+        navigate('/');
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   const onFinishFailed = (errorInfo: any) => {
-    console.log("Failed:", errorInfo);
+    console.log('Failed:', errorInfo);
   };
 
-  const [size, setSize] = useState<SizeType>("large");
+  const [size, setSize] = useState<SizeType>('large');
   return (
     <Div>
       <Form
-        name="basic"
+        name='basic'
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 16 }}
         style={{
           maxWidth: 600,
-          marginTop: "10%",
+          marginTop: '10%',
         }}
         initialValues={{ remember: true }}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
-        autoComplete="off"
+        autoComplete='off'
       >
-        <Form.Item name="email" label="Email">
-          <Input size={size} placeholder="enter your email " />
+        <Form.Item name='email' label='Email'>
+          <Input size={size} placeholder='enter your email ' />
         </Form.Item>
-        <Form.Item name="password" label="Password">
-          <Input size={size} placeholder="enter your password" />
+        <Form.Item name='password' label='Password'>
+          <Input size={size} placeholder='enter your password' />
         </Form.Item>
 
         <Form.Item<FieldType>
           // name="remember"
-          valuePropName="checked"
+          valuePropName='checked'
           wrapperCol={{ offset: 8, span: 16 }}
         >
           <Checkbox>Remember me</Checkbox>
         </Form.Item>
 
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button type="primary" htmlType="submit">
+          <Button type='primary' htmlType='submit'>
             Submit
           </Button>
         </Form.Item>
